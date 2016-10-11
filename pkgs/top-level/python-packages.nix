@@ -361,13 +361,14 @@ in modules // {
 
     propagatedBuildInputs = with self; [ appdirs colorama dateutil requests2 requests_toolbelt sqlalchemy ];
 
-    makeWrapperArgs = [ "--prefix LIBFUSE_PATH : ${pkgs.fuse}/lib/libfuse.so" ];
+    # TODO point to osxfuse path once package created
+    makeWrapperArgs = if !stdEnv.isDarwin then [ "--prefix LIBFUSE_PATH : ${pkgs.fuse}/lib/libfuse.so" ] else [];
 
     meta = {
       description = "A command line interface and FUSE filesystem for Amazon Cloud Drive";
       homepage = https://github.com/yadayada/acd_cli;
       license = licenses.gpl2;
-      platforms = platforms.linux;
+      platforms = platforms.linux ++ platforms.darwin;
       maintainers = with maintainers; [ edwtjo ];
     };
   };
@@ -11319,15 +11320,16 @@ in modules // {
       sha256 = "0v5grm4zyf58hsplwsxfbihddw95lz9w8cy3rpzbyha287swgx8h";
     };
 
-    propagatedBuildInputs = [ pkgs.fuse ];
+    # Darwin requires osxfuse to be installed http://osxfuse.github.io/ TODO: create osxfuse package
+    propagatedBuildInputs = if !stdenv.isDarwin then [ pkgs.fuse ] else [];
 
     # No tests included
     doCheck = false;
 
-    patchPhase = ''
+    patchPhase = if !stdenv.isDarwin then ''
       substituteInPlace fuse.py --replace \
         "find_library('fuse')" "'${pkgs.fuse}/lib/libfuse.so'"
-    '';
+    '' else "";
 
     meta = {
       description = "Simple ctypes bindings for FUSE";
@@ -11337,7 +11339,7 @@ in modules // {
       '';
       homepage = http://github.com/terencehonles/fusepy;
       license = licenses.isc;
-      platforms = platforms.unix;
+      platforms = platforms.unix ++ platforms.darwin;
       maintainers = with maintainers; [ nckx ];
     };
   };
