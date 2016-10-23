@@ -618,6 +618,8 @@ in
 
   bitbucket-cli = pythonPackages.bitbucket-cli;
 
+  blackbox = callPackage ../tools/security/blackbox { };
+
   blink = callPackage ../applications/networking/instant-messengers/blink { };
 
   blink1-tool = callPackage ../tools/misc/blink1-tool { };
