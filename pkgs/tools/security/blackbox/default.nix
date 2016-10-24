@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, gnupg1, makeWrapper }:
+{ stdenv, fetchurl, gnupg1compat , makeWrapper }:
 
 stdenv.mkDerivation rec {
   name = "blackbox-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   postFixup = ''
     for script in "$out"/bin/blackbox_*; do
-      wrapProgram "$script" --prefix PATH : "${gnupg1}/bin";
+      wrapProgram "$script" --prefix PATH : "${gnupg1compat}/bin";
     done
   '';
 
