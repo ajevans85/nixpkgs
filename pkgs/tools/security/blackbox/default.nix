@@ -1,5 +1,14 @@
-{ stdenv, fetchurl, gnupg1compat , makeWrapper }:
-
+{ stdenv
+, fetchurl
+, gnupg21
+, makeWrapper
+, pinentry
+}:
+let
+  gpg = gnupg21.override {
+    pinentryCmd = "pinentry-curses"; #It's hard to set this in gpg-agent.conf as need hardcoded nix path
+  };
+in
 stdenv.mkDerivation rec {
   name = "blackbox-${version}";
   version = "1.20160122";
@@ -19,7 +28,8 @@ stdenv.mkDerivation rec {
 
   postFixup = ''
     for script in "$out"/bin/blackbox_*; do
-      wrapProgram "$script" --prefix PATH : "${gnupg1compat}/bin";
+      wrapProgram "$script" \
+        --prefix PATH : ${stdenv.lib.makeBinPath [ gpg pinentry ]};
     done
   '';
 

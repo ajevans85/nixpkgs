@@ -3,7 +3,7 @@
 
 # Each of the dependencies below are optional.
 # Gnupg can be built without them at the cost of reduced functionality.
-, pinentry ? null, x11Support ? true
+, pinentry ? null, x11Support ? true, pinentryCmd ? "pinentry"
 , adns ? null, gnutls ? null, libusb ? null, openldap ? null
 , readline ? null, zlib ? null, bzip2 ? null
 }:
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     sed -i 's,"libpcsclite\.so[^"]*","${pcsclite}/lib/libpcsclite.so",g' scd/scdaemon.c
   ''; #" fix Emacs syntax highlighting :-(
 
-  configureFlags = optional x11Support "--with-pinentry-pgm=${pinentry}/bin/pinentry";
+  configureFlags = "--with-pinentry-pgm=${pinentry}/bin/${pinentryCmd}";
 
   meta = with stdenv.lib; {
     homepage = http://gnupg.org;
