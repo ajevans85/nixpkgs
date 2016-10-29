@@ -18,6 +18,7 @@
   adnelson = "Allen Nelson <ithinkican@gmail.com>";
   adolfogc = "Adolfo E. García Castro <adolfo.garcia.cr@gmail.com>";
   aespinosa = "Allan Espinosa <allan.espinosa@outlook.com>";
+  aevans = "Adam Evans <aevans.nix@agileand.me>"
   aflatter = "Alexander Flatter <flatter@fastmail.fm>";
   aforemny = "Alexander Foremny <alexanderforemny@googlemail.com>";
   afranchuk = "Alex Franchuk <alex.franchuk@gmail.com>";

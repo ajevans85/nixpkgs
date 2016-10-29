@@ -16931,6 +16931,8 @@ in
 
   greybird = callPackage ../misc/themes/greybird { };
 
+  guard = callPackage ../development/tools/guard { };
+
   gxemul = callPackage ../misc/emulators/gxemul { };
 
   hatari = callPackage ../misc/emulators/hatari { };
